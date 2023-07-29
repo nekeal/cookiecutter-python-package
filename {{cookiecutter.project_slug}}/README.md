@@ -29,7 +29,7 @@ pip install {{ cookiecutter.project_slug }}
 * Clone this repository
 * Requirements:
   * [Poetry](https://python-poetry.org/)
-  * Python 3.7+
+  * Python {{ cookiecutter.python_version }}
 * Create a virtual environment and install the dependencies
 
 ```sh
