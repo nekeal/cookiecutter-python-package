@@ -48,13 +48,7 @@ def test_python_version_is_correctly_included_in_black_config(generated_project_
         generated_project_path.joinpath("pyproject.toml").read_text()
     )
 
-    assert parsed_pyproject_toml["tool"]["black"]["target-version"] == [
-        "py38",
-        "py39",
-        "py310",
-        "py311",
-    ]
-
+    assert parsed_pyproject_toml["tool"]["ruff"]["target-version"] == "py38"
 
 # for gh test workflow
 def test_python_version_is_correctly_included_in_github_workflow(
