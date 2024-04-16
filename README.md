@@ -43,9 +43,7 @@ A [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/README.html) (pro
 * [Poetry](https://python-poetry.org/docs/) for managing dependencies and packaging
 * [pre-commit](https://pre-commit.com/) for running all the goodies listed below
 * [mypy](https://mypy.readthedocs.io/en/stable/) for static type checking
-* [ruff](https://beta.ruff.rs/) (with multiple plugins enabled) for linting (e.g. style and complexity checks, commented code, etc.)
-  and auto-sorting imports
-* [black](https://black.readthedocs.io/en/stable/) for auto-formatting the code
+* [ruff](https://docs.astral.sh/ruff/) for automatic formatting, linting and automatically fixing some linting errors
 
 #### Automation
 
