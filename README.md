@@ -1,10 +1,12 @@
-# Wolt Python Package Cookiecutter
+# Cookiecutter - Python package
 
 A [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/README.html) (project template) for rapidly developing new open source Python packages. Best practices with all the modern bells and whistles included.
 
-![Demo](https://github.com/woltapp/wolt-python-package-cookiecutter/raw/master/demo.gif)
+![Demo](https://github.com/nekeal/cookiecutter-python-package/raw/master/demo.gif)
 
-## Example projects which use Wolt Python Package Cookiecutter
+## Example projects which use Cookiecutter - Python package
+* [nekeal/issx](https://github.com/nekeal/issx)
+* [nekeal/advent-of-code-python-cli](https://github.com/nekeal/advent-of-code-python-cli)
 * [jerry-git/pytest-split](https://github.com/jerry-git/pytest-split)
 
 ## Features
@@ -56,10 +58,26 @@ Make sure you have [`cruft`](https://github.com/cruft/cruft#installation) instal
  [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/installation.html) if you are not interested in
   getting updates to the project "boilerplate" in the future.
 
+You can install `cruft` with [pipx](https://pipx.pypa.io/stable/) or [uv](https://docs.astral.sh/uv/):
+
+```sh
+pipx install cruft
+```
+or
+
+```sh
+uv tool install cruft
+```
+
 Create a new project:
 
 ```sh
-cruft create https://github.com/woltapp/wolt-python-package-cookiecutter
+cruft create https://github.com/nekeal/cookiecutter-python-package
+```
+or
+
+```sh
+uvx cruft create https://github.com/nekeal/cookiecutter-python-package
 ```
 
 The CLI interface will ask some basic questions, such the name of the project, and then generate all the goodies
@@ -71,7 +89,7 @@ After that you can make it a proper git repo:
 cd <your-project-slug>
 git init
 git add .
-git commit -m "Initial project structure from Wolt Python Package cookiecutter"
+git commit -m "Initial project structure from Cookiecutter - Python package"
 ```
 
 We update this cookiecutter template regularly to keep it up-to-date with the best practices of the Python world. You
