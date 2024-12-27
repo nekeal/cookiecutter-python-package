@@ -49,4 +49,4 @@ jobs:
           tag_name: ${{ steps.updated_version.outputs.version }}
           release_name: Release ${{ steps.updated_version.outputs.version }}
           body: ${{ steps.changelog.outputs.body }}
-          draft: true{% endraw %}
+          draft: true{% endraw +%}
