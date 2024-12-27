@@ -77,3 +77,10 @@ venv.bak/
 
 # IDEs
 .idea/
+
+# cookiecutter template
+{% if not cookiecutter.releasable %}
+CHANGELOG.md
+.github/workflows/draft_release.yml
+.github/workflows/release.yml
+{% endif %}

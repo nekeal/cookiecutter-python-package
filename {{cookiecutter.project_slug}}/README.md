@@ -1,6 +1,8 @@
 # {{ cookiecutter.project_name }}
 
+{% if cookiecutter.releasable %}
 [![PyPI](https://img.shields.io/pypi/v/{{ cookiecutter.project_slug }}?style=flat-square)](https://pypi.python.org/pypi/{{ cookiecutter.project_slug }}/)
+{% endif %}
 [![Python Version](https://img.shields.io/badge/python-{{ cookiecutter._python_version_specs[cookiecutter.python_version].versions | join("%20|%20") }}-blue.svg)](https://www.python.org/downloads/)
 ![GitHub License](https://img.shields.io/github/license/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug}})
 [![Coookiecutter - Python package](https://img.shields.io/badge/cookiecutter-nekeal-00a86b?style=flat-square&logo=cookiecutter&logoColor=D4AFff&link=https://github.com/nekeal/cookiecutter-python-package)](https://github.com/nekeal/cookiecutter-python-package)
@@ -10,8 +12,10 @@
 **Documentation**: [https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_slug}}](https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_slug}})
 
 **Source Code**: [https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}](https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }})
+{% if cookiecutter.releasable %}
 
 **PyPI**: [https://pypi.org/project/{{ cookiecutter.project_slug }}/](https://pypi.org/project/{{ cookiecutter.project_slug }}/)
+{% endif %}
 
 ---
 
@@ -52,6 +56,8 @@ pytest
 The documentation is automatically generated from the content of the [docs directory](https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/tree/master/docs) and from the docstrings
  of the public signatures of the source code. The documentation is updated and published as a [Github Pages page](https://pages.github.com/) automatically as part each release.
 
+{%- if cookiecutter.releasable %}
+
 ### Releasing
 
 Trigger the [Draft release workflow](https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/actions/workflows/draft_release.yml)
@@ -61,6 +67,7 @@ Find the draft release from the
 [GitHub releases](https://github.com/{{ cookiecutter.github_username}}/{{ cookiecutter.project_slug }}/releases) and publish it. When
  a release is published, it'll trigger [release](https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/blob/master/.github/workflows/release.yml) workflow which creates PyPI
  release and deploys updated documentation.
+{%- endif %}
 
 ### Pre-commit
 

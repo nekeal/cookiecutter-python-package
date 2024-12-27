@@ -41,7 +41,9 @@ pymdown-extensions = "*"
 pytest = "*"
 pytest-github-actions-annotate-failures = "*"
 pytest-cov = "*"
+{% if cookiecutter.releasable %}
 python-kacl = "*"
+{% endif %}
 ruff = "*"
 
 [build-system]
