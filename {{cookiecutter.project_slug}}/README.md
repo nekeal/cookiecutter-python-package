@@ -1,7 +1,7 @@
 # {{ cookiecutter.project_name }}
 
 [![PyPI](https://img.shields.io/pypi/v/{{ cookiecutter.project_slug }}?style=flat-square)](https://pypi.python.org/pypi/{{ cookiecutter.project_slug }}/)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/{{ cookiecutter.project_slug}}?style=flat-square)](https://pypi.python.org/pypi/{{ cookiecutter.project_slug }}/)
+[![Python Version](https://img.shields.io/badge/python-{{ cookiecutter._python_version_specs[cookiecutter.python_version].versions | join("%20|%20") }}-blue.svg)](https://www.python.org/downloads/)
 ![GitHub License](https://img.shields.io/github/license/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug}})
 [![Coookiecutter - Python package](https://img.shields.io/badge/cookiecutter-nekeal-00a86b?style=flat-square&logo=cookiecutter&logoColor=D4AFff&link=https://github.com/nekeal/cookiecutter-python-package)](https://github.com/nekeal/cookiecutter-python-package)
 
