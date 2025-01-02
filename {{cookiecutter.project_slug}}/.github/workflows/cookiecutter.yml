@@ -76,4 +76,4 @@ jobs:
           title: "[Actions] Auto-Update cookiecutter template"
           body: ${{ steps.get_changelog.outputs.changelog }}
           branch: chore/auto-update-project-from-template
-          delete-branch: true{% endraw %}
+          delete-branch: true{% endraw +%}

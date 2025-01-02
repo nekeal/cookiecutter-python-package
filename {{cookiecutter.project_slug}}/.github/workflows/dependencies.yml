@@ -54,4 +54,4 @@ jobs:
           title: "[Actions] Auto-Update dependencies"
           body: ${{ steps.get_outdated_dependencies.outputs.body }}
           branch: chore/update-dependencies
-          delete-branch: true{% endraw %}
+          delete-branch: true{% endraw +%}

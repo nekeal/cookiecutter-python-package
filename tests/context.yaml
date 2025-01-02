@@ -5,3 +5,4 @@ default_context:
     project_name: "example-project"
     project_short_description: "A short description of the project"
     python_version: "3.9+"
+    releasable: true

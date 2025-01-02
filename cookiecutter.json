@@ -6,6 +6,7 @@
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
   "package_name": "{{ cookiecutter.project_slug.replace('-', '_') }}",
   "project_short_description": "A short description of the project",
+  "releasable": true,
   "python_version": [
     "3.9+",
     "3.10+",
@@ -49,5 +50,10 @@
         "3.13"
       ]
     }
-  }
+  },
+  "__prompts__":
+  {
+    "releasable": "Do you want to version and release this package to PyPI?"
+  },
+  "_jinja2_env_vars": {"lstrip_blocks": true, "trim_blocks": true}
 }
