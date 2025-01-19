@@ -70,11 +70,6 @@ ignore = [
     # the likelihood of running into an issue when shadowing a buildin
     # with a class attribute is very low
     "A003",
-    # flake8-bugbear
-    # fastapi recommends to use `Depend()` as an argument default.
-    # Unfortunately, exceptions are hardcoded in bugbear.
-    # https://github.com/PyCQA/flake8-bugbear/issues/62
-    "B008",
 ]
 select = [
     "A", # flake8 builtins
