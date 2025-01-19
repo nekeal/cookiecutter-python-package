@@ -1,36 +1,38 @@
-[tool.poetry]
+[project]
 name = "{{ cookiecutter.project_slug }}"
 version = "0.0.1"
 description = "{{ cookiecutter.project_short_description }}"
 authors = [
-    "{{ cookiecutter.author_name }} <{{ cookiecutter.author_email }}>",
+    {name = "{{ cookiecutter.author_name }}", email = "{{ cookiecutter.author_email }}"}
 ]
 license = "MIT"
 readme = "README.md"
-
-documentation = "https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_slug }}"
-homepage = "https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_slug }}"
-repository = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
-
 classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
-  {%- for version in cookiecutter._python_version_specs[cookiecutter.python_version]['versions'] %}
+  {% for version in cookiecutter._python_version_specs[cookiecutter.python_version]['versions'] %}
   "Programming Language :: Python :: {{ version }}",
-  {%- endfor %}
+  {% endfor %}
   "Topic :: Software Development :: Libraries :: Python Modules",
   "Typing :: Typed",
 ]
 
+requires-python = ">={{ cookiecutter._python_version_specs[cookiecutter.python_version]['versions'][0] }}, <4.0"
+dependencies = []
+
+[project.urls]
+documentation = "https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_slug }}"
+homepage = "https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_slug }}"
+repository = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
+
+
+[tool.poetry]
 packages = [
     { include = "{{ cookiecutter.package_name }}", from = "src" }
 ]
-
-[tool.poetry.dependencies]
-python = ">={{ cookiecutter._python_version_specs[cookiecutter.python_version]['versions'][0] }}, <4.0"
 
 [tool.poetry.group.dev.dependencies]
 mkdocstrings = {version = ">=0.23", extras = ["python"]}
