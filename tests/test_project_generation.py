@@ -103,3 +103,33 @@ def test_dependencies_can_be_installed(generated_project_path):
         text=True,
     )
     assert result.returncode == 0, f"uv sync failed: {result.stderr}"
+
+
+def test_precommit_hooks_pass(generated_project_path):
+    """Verify that all pre-commit hooks pass on the generated project."""
+    subprocess.run(
+        ["git", "init"],
+        cwd=generated_project_path,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["git", "add", "."],
+        cwd=generated_project_path,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["uv", "sync"],
+        cwd=generated_project_path,
+        capture_output=True,
+        text=True,
+    )
+
+    result = subprocess.run(
+        ["uv", "run", "prek", "run", "--all-files"],
+        cwd=generated_project_path,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, f"prek run failed:\nstdout: {result.stdout}\nstderr: {result.stderr}"
