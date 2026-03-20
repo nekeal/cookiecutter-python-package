@@ -31,7 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/python-uv-env
-      - run: pre-commit run --all-files
+      - run: prek run --all-files
   {%- endraw %}
 
   test:

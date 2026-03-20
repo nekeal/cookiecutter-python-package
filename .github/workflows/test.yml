@@ -44,7 +44,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python -m pip install cookiecutter uv pre-commit
+      - run: python -m pip install cookiecutter uv prek
       - run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) 1.6.21
       - name: Generate project
         run: |
@@ -64,5 +64,5 @@ jobs:
         run: |
           cd example-project
           uv sync
-          pre-commit run --all-files
+          prek run --all-files
           uv run mkdocs build
