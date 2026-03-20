@@ -1,1 +1,5 @@
 __pycache__/
+
+# Claude Code
+.agents/
+.claude/

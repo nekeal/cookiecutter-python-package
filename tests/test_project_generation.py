@@ -1,3 +1,4 @@
+import subprocess
 from typing import Any
 
 import pytest
@@ -38,16 +39,27 @@ def test_generate_new_project(tmp_path, generated_project_path):
     assert generated_project_path == tmp_path / PROJECT_NAME
 
 
-def test_poetry_uses_dev_group(generated_project_path):
+def test_uses_hatchling_build_system(generated_project_path):
     pyproject_toml_content = generated_project_path.joinpath(
         "pyproject.toml"
     ).read_text()
 
-    assert "dev-dependencies" not in pyproject_toml_content
-    assert "[tool.poetry.group.dev.dependencies]" in pyproject_toml_content.splitlines()
+    assert '[build-system]' in pyproject_toml_content
+    assert 'hatchling' in pyproject_toml_content
+    assert 'poetry' not in pyproject_toml_content
 
 
-def test_python_version_is_correctly_included_in_black_config(generated_project_path):
+def test_uses_dependency_groups(generated_project_path):
+    pyproject_toml_content = generated_project_path.joinpath(
+        "pyproject.toml"
+    ).read_text()
+
+    assert '[dependency-groups]' in pyproject_toml_content
+    assert 'pyrefly' in pyproject_toml_content
+    assert 'prek' in pyproject_toml_content
+
+
+def test_python_version_is_correctly_included_in_ruff_config(generated_project_path):
     parsed_pyproject_toml = toml.loads(
         generated_project_path.joinpath("pyproject.toml").read_text()
     )
@@ -77,5 +89,17 @@ def test_specific_files_and_packages_are_not_include_if_package_is_meant_to_be_n
     parsed_pyproject_toml = toml.loads(
         project_path.joinpath("pyproject.toml").read_text()
     )
-    assert "python-kacl" not in parsed_pyproject_toml["tool"]["poetry"]["group"]["dev"]["dependencies"]
+    dev_deps = parsed_pyproject_toml.get("dependency-groups", {}).get("dev", [])
+    assert "python-kacl" not in dev_deps
     assert "pypi" not in Path(project_path / "README.md").read_text().lower()
+
+
+def test_dependencies_can_be_installed(generated_project_path):
+    """Verify that all dependencies in the generated project can be installed with uv sync."""
+    result = subprocess.run(
+        ["uv", "sync"],
+        cwd=generated_project_path,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, f"uv sync failed: {result.stderr}"

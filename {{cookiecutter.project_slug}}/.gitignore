@@ -84,3 +84,7 @@ CHANGELOG.md
 .github/workflows/draft_release.yml
 .github/workflows/release.yml
 {% endif %}
+
+# Claude Code
+.agents/
+.claude/

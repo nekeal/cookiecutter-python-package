@@ -27,7 +27,7 @@ A [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/README.html) (pro
 * Powered by [mkdocs-material](https://github.com/squidfunk/mkdocs-material)
 * Auto-generated API documentation from docstrings via [mkdocstrings](https://github.com/mkdocstrings/mkdocstrings)
 * See the extensive list of [MkDocs plugins](https://github.com/mkdocs/mkdocs/wiki/MkDocs-Plugins) which can help you
- to tune the documentation to fit your project's needs
+  to tune the documentation to fit your project's needs
 
 #### Automated releases
 
@@ -42,9 +42,10 @@ A [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/README.html) (pro
 
 #### Bells and whistles
 
-* [Poetry](https://python-poetry.org/docs/) for managing dependencies and packaging
-* [pre-commit](https://pre-commit.com/) for running all the goodies listed below
-* [mypy](https://mypy.readthedocs.io/en/stable/) for static type checking
+* [uv](https://docs.astral.sh/uv/) for managing dependencies and packaging
+* [hatchling](https://github.com/pypa/hatch) as the build backend
+* [prek](https://github.com/j178/prek) for running all the goodies listed below
+* [pyrefly](https://pyrefly.org/) for static type checking
 * [ruff](https://docs.astral.sh/ruff/) for automatic formatting, linting and automatically fixing some linting errors
 
 #### Automation

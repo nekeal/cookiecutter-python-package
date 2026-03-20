@@ -1,45 +1,79 @@
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
-    hooks:
-      - id: check-ast
-      - id: check-added-large-files
-      - id: check-merge-conflict
-      - id: check-case-conflict
-      - id: check-docstring-first
-      - id: check-json
-      - id: check-yaml
-      - id: debug-statements
-      - id: end-of-file-fixer
-      - id: trailing-whitespace
-      - id: mixed-line-ending
--   repo: local
-    hooks:
-      - id: ruff-format
-        name: ruff-format
-        entry: poetry run ruff format
-        require_serial: true
-        language: system
-        types: [ python ]
-      - id: ruff
-        name: ruff
-        # Remove --fix, in case you want it to disable autofix when this hook runs
-        entry: poetry run ruff check --fix --force-exclude
-        require_serial: true
-        language: system
-        types: [ python ]
-      - id: mypy
-        name: mypy
-        entry: poetry run mypy .
-        require_serial: true
-        language: system
-        types: [python]
-        pass_filenames: false
-      {% if cookiecutter.releasable %}
-      - id: kacl-verify
-        name: kacl-verify
-        entry: poetry run kacl-cli verify
-        language: system
-        files: 'CHANGELOG.md'
-        pass_filenames: false
-      {% endif %}
+    # Prek builtin hooks (fast Rust implementations)
+    - repo: builtin
+      hooks:
+          # Phase 0-2: File fixers run sequentially
+          - id: mixed-line-ending
+            priority: 0
+          - id: trailing-whitespace
+            priority: 1
+          - id: end-of-file-fixer
+            priority: 2
+
+    # Project-specific hooks
+    - repo: local
+      hooks:
+          # Phase 10: Format code (runs alone, sequentially)
+          - id: ruff-format
+            name: ruff-format
+            entry: uv run ruff format
+            require_serial: true
+            language: system
+            types: [python]
+            priority: 10
+
+          # Phase 20: Fix linting issues (runs alone, sequentially)
+          - id: ruff
+            name: ruff
+            entry: uv run ruff check --fix --force-exclude
+            require_serial: true
+            language: system
+            types: [python]
+            priority: 20
+
+    # Phase 100: All read-only checks run in parallel
+    - repo: builtin
+      hooks:
+          - id: check-added-large-files
+            priority: 100
+          - id: check-merge-conflict
+            priority: 100
+          - id: check-case-conflict
+            priority: 100
+          - id: check-json
+            priority: 100
+          - id: check-yaml
+            priority: 100
+
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.0.1
+      hooks:
+          - id: check-ast
+            priority: 100
+          - id: check-docstring-first
+            priority: 100
+          - id: debug-statements
+            priority: 100
+
+    - repo: local
+      hooks:
+          - id: pyrefly
+            name: pyrefly
+            entry: uv run pyrefly check
+            require_serial: false
+            language: system
+            types: [python]
+            pass_filenames: false
+            priority: 100
+
+{% if cookiecutter.releasable %}
+    - repo: local
+      hooks:
+          - id: kacl-verify
+            name: kacl-verify
+            entry: uv run kacl-cli verify
+            language: system
+            files: 'CHANGELOG.md'
+            pass_filenames: false
+            priority: 100
+{% endif %}
