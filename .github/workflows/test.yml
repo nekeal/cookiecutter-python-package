@@ -44,7 +44,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python -m pip install cookiecutter poetry
+      - run: python -m pip install cookiecutter uv pre-commit
       - run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) 1.6.21
       - name: Generate project
         run: |
@@ -63,6 +63,6 @@ jobs:
       - name: Lint project
         run: |
           cd example-project
-          poetry install
-          poetry run pre-commit run -a
-          poetry run mkdocs build
+          uv sync
+          pre-commit run --all-files
+          uv run mkdocs build
