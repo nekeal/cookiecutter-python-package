@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Download actionlint
-        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) 1.6.21
+        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) 1.7.11
         shell: bash
       - name: Check workflow files
         run: ./actionlint -color
@@ -30,9 +30,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/python-uv-env
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: false
+          python-version: "3.12"
+      - name: Install prek
+        run: uv pip install prek
       - run: prek run --all-files
-  {%- endraw %}
+{%- endraw %}
 
   test:
     runs-on: ubuntu-latest
@@ -42,8 +48,10 @@ jobs:
         python-version: {{ cookiecutter._python_version_specs[cookiecutter.python_version].versions }}
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/python-uv-env
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
         with:
+          enable-cache: false
           python-version: {% raw %}${{ matrix.python-version }}{% endraw +%}
       - run: uv run pytest
 
@@ -51,5 +59,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/python-uv-env
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: false
+          python-version: "3.12"
       - run: uv run mkdocs build

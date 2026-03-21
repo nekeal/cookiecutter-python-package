@@ -9,10 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/python-poetry-env
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: false
+          python-version: "{{ cookiecutter._python_version_specs[cookiecutter.python_version]['versions'][0] }}"
       - name: Publish to pypi
-        run: |
-          poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
-          poetry publish --build --no-interaction
+        run: uv publish --build
       - name: Deploy docs
-        run: poetry run mkdocs gh-deploy --force{% endraw +%}
+        run: uv run mkdocs gh-deploy --force{% endraw +%}

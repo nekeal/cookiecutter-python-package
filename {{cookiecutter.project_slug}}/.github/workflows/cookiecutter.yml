@@ -15,7 +15,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: python -m pip install cruft poetry jello tabulate
+        run: python -m pip install cruft jello tabulate prek
 
       - name: Update project structure
         run: |
@@ -25,12 +25,12 @@ jobs:
         id: changes
         run: echo "::set-output name=changed::$(git status --porcelain | wc -l)"
 
-      - name: apply additional changes and fixes
+      - name: Apply additional changes and fixes
         if: steps.changes.outputs.changed > 0
         run: |
-          poetry lock --no-update  # add new dependencies
-          poetry install
-          poetry run pre-commit run -a || true  # we have to fix other issues manually
+          uv lock  # add new dependencies
+          uv sync
+          prek run --all-files
 
       - name: Get template versions
         id: get_versions
