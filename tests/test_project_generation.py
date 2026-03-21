@@ -77,7 +77,7 @@ def test_python_version_is_correctly_included_in_github_workflow(
 
     assert parsed_github_workflow["jobs"]["test"]["strategy"]["matrix"][
                "python-version"
-           ] == ["3.9", "3.10", "3.11", "3.12", "3.13"]
+           ] == ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
 
 
 def test_specific_files_and_packages_are_not_include_if_package_is_meant_to_be_not_releasable(tmp_path):
@@ -119,13 +119,6 @@ def test_precommit_hooks_pass(generated_project_path):
         capture_output=True,
         text=True,
     )
-    subprocess.run(
-        ["uv", "sync"],
-        cwd=generated_project_path,
-        capture_output=True,
-        text=True,
-    )
-
     result = subprocess.run(
         ["uv", "run", "prek", "run", "--all-files"],
         cwd=generated_project_path,
