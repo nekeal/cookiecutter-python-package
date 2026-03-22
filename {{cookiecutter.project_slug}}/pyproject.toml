@@ -28,29 +28,28 @@ documentation = "https://{{ cookiecutter.github_username }}.github.io/{{ cookiec
 homepage = "https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_slug }}"
 repository = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
 
-
-[tool.poetry]
-packages = [
-    { include = "{{ cookiecutter.package_name }}", from = "src" }
+[dependency-groups]
+dev = [
+    "pyrefly",
+    "prek",
+    "pytest",
+    "pytest-cov",
+    "ruff",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "pymdown-extensions",
+    "pytest-github-actions-annotate-failures",
+{% if cookiecutter.releasable %}
+    "python-kacl",
+{% endif %}
 ]
 
-[tool.poetry.group.dev.dependencies]
-mkdocstrings = {version = ">=0.23", extras = ["python"]}
-mkdocs-material = "*"
-mypy = "*"
-pre-commit = "*"
-pymdown-extensions = "*"
-pytest = "*"
-pytest-github-actions-annotate-failures = "*"
-pytest-cov = "*"
-{% if cookiecutter.releasable %}
-python-kacl = "*"
-{% endif %}
-ruff = "*"
-
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/{{ cookiecutter.package_name }}"]
 
 [tool.ruff]
 target-version = "py{{ cookiecutter._python_version_specs[cookiecutter.python_version]['versions'][0].replace('.', '') }}"
@@ -119,24 +118,4 @@ exclude_lines = [
     'pragma: no cover'
 ]
 
-[tool.mypy]
-# This is the global mypy configuration.
-# Avoid changing this!
-strict = true  # See all the enabled flags `mypy --help | grep -A 10 'Strict mode'`
-disallow_any_unimported = true
-
-# If you need to ignore something for some specific module,
-# add overrides for them. Avoid changing the global config!
-# For example:
-# [[tool.mypy.overrides]]
-# module = [
-#  "my_unpyted_dependency1.*",
-#  "my_unpyted_dependency2.*"
-# ]
-# ignore_missing_imports = true
-
-# [[tool.mypy.overrides]]
-# module = [
-#   "tests/my_thing/test_my_thing",
-# ]
-# disallow_untyped_defs = false
+[tool.pyrefly]

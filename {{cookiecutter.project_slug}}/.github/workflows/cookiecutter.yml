@@ -15,7 +15,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: python -m pip install cruft poetry jello tabulate
+        run: python -m pip install cruft jello tabulate prek
 
       - name: Update project structure
         run: |
@@ -23,14 +23,20 @@ jobs:
 
       - name: Check if there are changes
         id: changes
-        run: echo "::set-output name=changed::$(git status --porcelain | wc -l)"
+        run: echo "changed=$(git status --porcelain | wc -l)" >> "$GITHUB_OUTPUT"
 
-      - name: apply additional changes and fixes
+      - name: Install uv
+        if: steps.changes.outputs.changed > 0
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: false
+
+      - name: Apply additional changes and fixes
         if: steps.changes.outputs.changed > 0
         run: |
-          poetry lock --no-update  # add new dependencies
-          poetry install
-          poetry run pre-commit run -a || true  # we have to fix other issues manually
+          uv lock  # add new dependencies
+          uv sync
+          prek run --all-files
 
       - name: Get template versions
         id: get_versions
@@ -39,8 +45,8 @@ jobs:
         run: |
           CURRENT_VERSION=$(git show HEAD:.cruft.json | jello -r "_['commit'][:8]")
           NEXT_VERSION=$(jello -r "_['commit'][:8]" < .cruft.json)
-          echo ::set-output name="current_version::$CURRENT_VERSION"
-          echo ::set-output name="next_version::$NEXT_VERSION"
+          echo "current_version=$CURRENT_VERSION" >> "$GITHUB_OUTPUT"
+          echo "next_version=$NEXT_VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Get changelog
         id: get_changelog
@@ -60,7 +66,7 @@ jobs:
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
           body="${body//$'\r'/'%0D'}"
-          echo ::set-output name="changelog::$body"
+          echo "changelog=$body" >> "$GITHUB_OUTPUT"
 
       # behaviour if PR already exists: https://github.com/marketplace/actions/create-pull-request#action-behaviour
       - name: Create Pull Request
@@ -68,7 +74,7 @@ jobs:
           # a PAT is required to be able to update workflows
           GITHUB_TOKEN: ${{ secrets.AUTO_UPDATE_GITHUB_TOKEN }}
         if: ${{ steps.changes.outputs.changed > 0 && env.GITHUB_TOKEN != 0 }}
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ env.GITHUB_TOKEN }}
           commit-message: >-
