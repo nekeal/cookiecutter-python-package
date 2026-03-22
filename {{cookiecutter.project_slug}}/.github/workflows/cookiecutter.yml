@@ -25,6 +25,12 @@ jobs:
         id: changes
         run: echo "changed=$(git status --porcelain | wc -l)" >> "$GITHUB_OUTPUT"
 
+      - name: Install uv
+        if: steps.changes.outputs.changed > 0
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: false
+
       - name: Apply additional changes and fixes
         if: steps.changes.outputs.changed > 0
         run: |
