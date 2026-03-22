@@ -40,7 +40,6 @@ jobs:
           python-version: "3.12"
           activate-environment: true
       - run: uv pip install cookiecutter pytest pyyaml toml
-      - run: uv sync
       - run: uv run pytest
 
   lint-generated-project:
