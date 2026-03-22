@@ -24,7 +24,8 @@ jobs:
         with:
           enable-cache: false
           python-version: "3.12"
-      - run: uv pip install --system prek
+          activate-environment: true
+      - run: uv pip install prek
       - run: prek run --all-files
 
   test:
@@ -37,7 +38,8 @@ jobs:
         with:
           enable-cache: false
           python-version: "3.12"
-      - run: uv pip install --system cookiecutter pytest pyyaml toml
+          activate-environment: true
+      - run: uv pip install cookiecutter pytest pyyaml toml
       - run: uv sync
       - run: uv run pytest
 
