@@ -23,7 +23,7 @@ jobs:
         run: |
           body=$(uv pip list --outdated --format json)
           if [ "$body" != "[]" ]; then
-            echo "body=$body" >> $GITHUB_OUTPUT
+            echo "body=$body" >> $GITHUB_OUTPUT  # shellcheck disable=SC2086
           fi
 
       - name: Format PR Message
@@ -41,7 +41,7 @@ jobs:
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
           body="${body//$'\r'/'%0D'}"
-          echo "body=$body" >> $GITHUB_OUTPUT
+          echo "body=$body" >> $GITHUB_OUTPUT  # shellcheck disable=SC2086
 
       - name: Update outdated packages
         if: ${{ steps.check_for_outdated_dependencies.outputs.body != 0 }}
@@ -52,7 +52,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ steps.check_for_outdated_dependencies.outputs.body != 0 }}
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ env.GITHUB_TOKEN }}
           commit-message: >-
