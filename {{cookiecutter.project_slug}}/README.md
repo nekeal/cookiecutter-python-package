@@ -94,4 +94,4 @@ pre-commit run --all-files
 
 ---
 
-This project was generated using the [cookiecutter-python-package](https://github.com/woltapp/wolt-python-package-cookiecutter) template.
+This project was generated using the [cookiecutter-python-package](https://github.com/nekeal/cookiecutter-python-package) template.
